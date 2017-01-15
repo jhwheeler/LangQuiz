@@ -62,6 +62,9 @@ var stateHelper = {
     },
     sortAnswers: function(state, questions) {
         //sort answers at random
+        var keys = Object.keys(questions)
+        
+
         //assign them to choices array
     }
 }
