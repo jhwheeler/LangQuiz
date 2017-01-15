@@ -2,12 +2,38 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
+main {
+    min-height: calc(100vh - 80px);
 }
 
 header {
     text-align: center;
+}
+
+.startButton {
+    margin: auto;
+    display: block;
+    border-radius: 5px;
+    border: none;
+    height: 60px;
+    width: 180px;
+    font-size: 20px;
+    background-color: #5849fc;
+    color: #fff;
+    cursor: pointer;
+}
+
+.startButton:hover {
+    background-color: #1e0afc;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+footer > span > a {
+    color: #fff;
 }
 
 footer {
