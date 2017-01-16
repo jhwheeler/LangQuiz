@@ -1,4 +1,4 @@
-# langQuiz
+# LangQuiz
 
 A simple quiz game to test your linguistics knowledge!
 
