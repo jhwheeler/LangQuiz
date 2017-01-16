@@ -1,10 +1,11 @@
 'use strict';
 
 var state = {
-    currentQuestion: 0,
     score: 0,
     message: ["Congratulations!", "Well done!", "Not bad", "Could be better", "You've got some work to do..."]
 };
+
+var currentQuestionNumber = 0;
 
 var questions = [
     {
@@ -15,6 +16,7 @@ var questions = [
             "A letter in a given language that corresponds to a certain sound.",
             "The smallest meaning-bearing unit in a given language."
         ],
+        questionNumber: 0,
         correctAnswer: 0,
         chosenAnswer: null
     },
@@ -26,6 +28,7 @@ var questions = [
             "The root of a word, such as 'read-' in the word 'reader'.", 
             "A prefix or suffix that can be added to the beginning or ending of a word to make a new word."
         ],
+        questionNumber: 1,
         correctAnswer: 0,
         chosenAnswer: null
     },
@@ -55,46 +58,39 @@ var questions = [
     }
 ];
 
-
 var renderActions = {
-    renderQuestion: function(state, questions, element) {
-        var q = state.currentQuestion;
-        return element.find('.js-question-text').text(q.question);
+    renderQuestion: function(questions, element) {
+        return element.find('.js-question-text').text(questions[currentQuestionNumber].question);
     },
     renderChoices: function(state) {
         c = state.currentQuestion.choices;
-        c.sort(function() { return .5 - Math.random(); });
+        c.sort(function() { 
+            return .5 - Math.random(); 
+        });
         for (var i = 0; i < questions.length; i++) {
             console.log(questions[i].question);
             console.log(questions[i].choices);
         }
+    },
+    renderCorrectAnswer(state, questions) {
+        var currentCorrectAnswer = questions[currentQuestionNumber].correctAnswer;
+        return questions[currentQuestionNumber].choices[currentCorrectAnswer];
     }
 }
 
 var eventActions = {
     nextButtonHandler: function(state) {
         nextButton.submit(function(event) {
-            return state.currentQuestion++;
+            currentQuestionNumber++;
+            renderActions.renderQuestion(state, questions)
         }
     }
 }
 
-//in state, keep track of current question
-//when click next, call renderQuestion()
-//nextButtonHandler() > +1 to the currentQuestion in state
-
-
-/*show correct answer
- * renderCorrectAnswer(state, questions) {
- *   return questions[0].choices[questions[0].correctAnswer];
- * }
-*/
-
-
 $(function() {
     var nextButton = '.js-nextButton';
     var quizAnswers = '.js-answers';
-    renderActions.renderQuestion(state, questions, quizAnswers));
+    renderActions.renderQuestion(questions, quizAnswers));
     renderActions.renderChoices(state);
 });
 
@@ -118,43 +114,14 @@ $(function() {
 // 8. Once all questions are answered, display resultsTemplate
 //
 //
-// renderQuestion()
-// renderChoices()
 // updateProgress()
-// displayCorrectAnswer()
+// renderCorrectAnswer()
 // updateScore()
-// displayResults()
+// renderResults()
 //
-//
+//To-Do:
 //1. Just question-answer part (w/o showing correct answer or score)
 //2. Add scores
 //3. Add where they are
 //4. Add showing the correct answer
 //5. Add the final results
-
-
-
-
-
-
-
-
-
-
-
-/*
-var stateHelper = {
-    getQuestion: function(questions) {
-        var keys = Object.keys(questions);
-        var currentQuestion = keys[keys.length * Math.random() << 0];
-        return currentQuestion;
-    },
-    sortAnswers: function(state, questions) {
-        //sort answers at random
-        var keys = Object.keys(questions)
-        
-
-        //assign them to choices array
-    }
-}
-*/
