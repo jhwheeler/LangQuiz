@@ -1,7 +1,7 @@
 'use strict';
 
 var state = {
-    currentQuestion: "",
+    currentQuestion: 0,
     score: 0,
     message: ["Congratulations!", "Well done!", "Not bad", "Could be better", "You've got some work to do..."]
 };
@@ -59,11 +59,10 @@ var questions = [
 var renderActions = {
     renderQuestion: function(state, questions, element) {
         var q = state.currentQuestion;
-        element.find('.js-question-text').text(q.question);
-        return element;
+        return element.find('.js-question-text').text(q.question);
     },
     renderChoices: function(state) {
-        c = questions[id].choices;
+        c = state.currentQuestion.choices;
         c.sort(function() { return .5 - Math.random(); });
         for (var i = 0; i < questions.length; i++) {
             console.log(questions[i].question);
@@ -86,7 +85,9 @@ var eventActions = {
 
 
 /*show correct answer
- questions[0].choices[questions[0].correctAnswer]
+ * renderCorrectAnswer(state, questions) {
+ *   return questions[0].choices[questions[0].correctAnswer];
+ * }
 */
 
 
