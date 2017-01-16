@@ -23,13 +23,53 @@ header {
     cursor: pointer;
 }
 
-.startButton:hover {
+
+.nextButton {
+    margin: auto;
+    display: block;
+    border-radius: 5px;
+    border: none;
+    height: 40px;
+    width: 120px;
+    font-size: 20px;
+    background-color: #5849fc;
+    color: #fff;
+    cursor: pointer;
+}
+
+.startButton:hover, .nextButton:hover {
     background-color: #1e0afc;
+}
+
+.quizContainer {
+    margin: auto;
+    padding: 20px;
+    width: 1000px;
+    height: 500px;
+    text-align: center;
 }
 
 .question {
     font-size: 24px;
     font-weight: 500;
+}
+
+.answers {
+    text-align: center;
+}
+
+input {
+    display:block;
+    margin: 20px;
+    
+}
+
+.score, .progress {
+    margin: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 footer > span > a {

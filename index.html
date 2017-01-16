@@ -18,6 +18,38 @@
         </header>
         <main>
         <button class="startButton">Start</button>
+        <div class="quizContainer">
+            <div class="question js-question">
+                <span class="question-text js-question-text"></span>
+            </div>
+            <div class="answers js-answers">
+                <label class="js-answer"></label>
+                <input type="radio" name="choice" value="a"/><span id="js-answer-1"></span>
+                <label class="js-answer"></label>
+                <input type="radio" name="choice" value="b"/><span id="js-answer-2"></span>
+                <label class="js-answer"></label>
+                <input type="radio" name="choice" value="c"/><span id="js-answer-3"></span>
+                <label class="js-answer"></label>
+                <input type="radio" name="choice" value="d"/><span id="js-answer-4"></span>
+            </div>
+            <button class="nextButton js-nextButton">Next</button>
+            <div class="progress js-progress">
+                <span class="js-progress-number"></span>
+                <span> out of 5 questions</span>
+            </div>
+            <div class="score js-score">
+                <span class="js-correct-score"></span>
+                <span> correct | </span>
+                <span class="js-incorrect-score"></span>
+                <span>incorrect</span>
+            </div>
+        </div>
+        <div class="results js-results hidden">
+            <span class="js-message"></span>
+            <span> You got </span>
+            <span class="js-final-score"></span>
+            <span> correct out of 5.</span>
+        </div>
         </main>
         <footer>
             <span>Created by <a href="https://github.com/jhwheeler">Alacritas</a> of <a href="http://mythicacreative.com">Mythica Creative</a>.</span>
