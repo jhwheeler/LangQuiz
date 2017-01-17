@@ -1,11 +1,12 @@
 'use strict';
 
 var state = {
+    currentQuestionNumber: 0,
+    currentQuestion: questions[currentQuestionNumber].question,
     score: 0,
     message: ["Congratulations!", "Well done!", "Not bad", "Could be better", "You've got some work to do..."]
 };
 
-var currentQuestionNumber = 0;
 
 var questions = [
     {
@@ -59,39 +60,56 @@ var questions = [
 ];
 
 var renderActions = {
-    renderQuestion: function(questions, element) {
-        return element.find('.js-question-text').text(questions[currentQuestionNumber].question);
+    renderQuestion: function(state, questions, element) {
+        return element.find('.js-question-text').text(questions[state.currentQuestionNumber].question);
     },
-    renderChoices: function(state) {
-        c = state.currentQuestion.choices;
+    renderChoices: function(state, questions, element) {
+        var c = state.currentQuestion.choices;
         c.sort(function() { 
             return .5 - Math.random(); 
         });
         for (var i = 0; i < questions.length; i++) {
-            console.log(questions[i].question);
+            (questions[i].question);
             console.log(questions[i].choices);
         }
     },
     renderCorrectAnswer(state, questions) {
-        var currentCorrectAnswer = questions[currentQuestionNumber].correctAnswer;
-        return questions[currentQuestionNumber].choices[currentCorrectAnswer];
+        var currentCorrectAnswer = questions[state.currentQuestionNumber].correctAnswer;
+        return questions[state.currentQuestionNumber].choices[currentCorrectAnswer];
     }
 }
 
 var eventActions = {
     nextButtonHandler: function(state) {
         nextButton.submit(function(event) {
-            currentQuestionNumber++;
-            renderActions.renderQuestion(state, questions)
-        }
+            if (state.currentQuestionNumber < questions.length - 1) {
+                state.currentQuestionNumber++;
+                return true;
+            } else {
+                return false;
+            }
+            renderActions.renderQuestion(state, questions);
+            renderActions.renderChoices(state, questions, element);
+        });
+    },
+    startButtonHandler: function() {
+        $('.startButton').submit(function(event) {
+            event.preventDefault();
+            startButton.addClass('.hidden');
+            quizContainer.removeClass('.hidden');
+        });
     }
 }
 
 $(function() {
-    var nextButton = '.js-nextButton';
-    var quizAnswers = '.js-answers';
-    renderActions.renderQuestion(questions, quizAnswers));
-    renderActions.renderChoices(state);
+    var nextButton = $('.js-nextButton');
+    var quizAnswers = $('.js-answers');
+    var startButton = $('.startButton');
+    var quizContainer = $('.quizContainer');
+    eventActions.startButtonHandler();
+    renderActions.renderQuestion(state, questions, quizContainer);
+    renderActions.renderChoices(state, questions, quizAnswers);
+    eventActions.nextButtonHandler(state);
 });
 
 
