@@ -1,8 +1,6 @@
 'use strict';
 
 var state = {
-    currentQuestionNumber: 0,
-    currentQuestion: questions[currentQuestionNumber].question,
     score: 0,
     message: ["Congratulations!", "Well done!", "Not bad", "Could be better", "You've got some work to do..."],
     questions: [
@@ -54,21 +52,23 @@ var state = {
             correctAnswer: 0,
             chosenAnswer: null
         }
-    ]
+    ],
+    currentQuestionNumber: 0,
 };
+
+    state.currentQuestion = state.questions[state.currentQuestionNumber].question
 
 var renderActions = {
     renderQuestion: function(state, element) {
         return element.find('.js-question-text').text(state.questions[state.currentQuestionNumber].question);
     },
     renderChoices: function(state, element) {
-        var c = state.currentQuestion.choices;
+        var c = state.questions[state.currentQuestionNumber].choices;
         c.sort(function() { 
             return .5 - Math.random(); 
         });
         for (var i = 0; i < state.questions.length; i++) {
             (state.questions[i].question);
-            console.log(state.questions[i].choices);
         }
     },
     renderCorrectAnswer(state, questions) {
@@ -79,34 +79,26 @@ var renderActions = {
 
 var eventActions = {
     nextButtonHandler: function(state) {
-        nextButton.submit(function(event) {
-            if (state.currentQuestionNumber < state.questions.length - 1) {
-                state.currentQuestionNumber++;
-                return true;
-            } else {
-                return false;
-            }
-            renderActions.renderQuestion(state, questions);
-            renderActions.renderChoices(state, element);
-        });
+        if (state.currentQuestionNumber < state.questions.length - 1) {
+            state.currentQuestionNumber++;
+            return true;
+        } else {
+            return false;
+        }
+        renderActions.renderQuestion(state, questions);
+        renderActions.renderChoices(state, element);
     },
     startButtonHandler: function() {
-        $('.startButton').submit(function(event) {
-            event.preventDefault();
-            startButton.addClass('.hidden');
-            quizContainer.removeClass('.hidden');
-        });
+        event.preventDefault();
+        $('.startButton').addClass('hidden');
+        $('.quizContainer').removeClass('hidden');
     }
 }
 
 $(function() {
-    var nextButton = $('.js-nextButton');
-    var quizAnswers = $('.js-answers');
-    var startButton = $('.startButton');
-    var quizContainer = $('.quizContainer');
-    eventActions.startButtonHandler();
-    renderActions.renderQuestion(state, quizContainer);
-    renderActions.renderChoices(state, quizAnswers);
+    $('.startButton').on('click', eventActions.startButtonHandler); 
+    renderActions.renderQuestion(state, $('.quizContainer'));
+    renderActions.renderChoices(state, $('.js-answers'));
     eventActions.nextButtonHandler(state);
 });
 
