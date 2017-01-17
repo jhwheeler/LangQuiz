@@ -53,22 +53,22 @@ var state = {
             chosenAnswer: null
         }
     ],
-    currentQuestionNumber: 0,
+    currentQuestionNumber: 0
 };
 
     state.currentQuestion = state.questions[state.currentQuestionNumber].question
 
 var renderActions = {
     renderQuestion: function(state, element) {
-        return element.find('.js-question-text').text(state.questions[state.currentQuestionNumber].question);
+        element.find('.js-question-text').text(state.questions[state.currentQuestionNumber].question);
     },
     renderChoices: function(state, element) {
         var c = state.questions[state.currentQuestionNumber].choices;
         c.sort(function() { 
             return .5 - Math.random(); 
         });
-        for (var i = 0; i < state.questions.length; i++) {
-            (state.questions[i].question);
+        for (var i = 0; i < c.length; i++) {
+            element.find('.js-answer-' + i).text(c[i]);
         }
     },
     renderCorrectAnswer(state, questions) {
@@ -78,28 +78,28 @@ var renderActions = {
 }
 
 var eventActions = {
-    nextButtonHandler: function(state) {
+    nextButtonHandler: function() {
         if (state.currentQuestionNumber < state.questions.length - 1) {
             state.currentQuestionNumber++;
             return true;
         } else {
             return false;
         }
-        renderActions.renderQuestion(state, questions);
-        renderActions.renderChoices(state, element);
+        renderActions.renderQuestion(state, $('.quizContainer'));
+        renderActions.renderChoices(state, $('.js-answers'));
     },
     startButtonHandler: function() {
         event.preventDefault();
         $('.startButton').addClass('hidden');
         $('.quizContainer').removeClass('hidden');
+        renderActions.renderQuestion(state, $('.quizContainer'));
+        renderActions.renderChoices(state, $('.js-answers'));
     }
 }
 
 $(function() {
     $('.startButton').on('click', eventActions.startButtonHandler); 
-    renderActions.renderQuestion(state, $('.quizContainer'));
-    renderActions.renderChoices(state, $('.js-answers'));
-    eventActions.nextButtonHandler(state);
+    $('.nextButton').on('click', eventActions.nextButtonHandler);
 });
 
 
