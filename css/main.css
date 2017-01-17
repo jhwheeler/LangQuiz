@@ -2,30 +2,43 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Lato', sans-serif;
+}
+
 main {
     min-height: calc(100vh - 80px);
 }
 
 header {
+    color: #fff;
+    background-color: #5849fc;
     text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+h1 {
+    margin-top: 0px;
 }
 
 .startButton {
-    margin: auto;
+    margin: 0 auto;
     display: block;
     border-radius: 5px;
     border: none;
     height: 60px;
     width: 180px;
-    font-size: 20px;
+    font-size: 30px;
+    text-transform: uppercase;
     background-color: #5849fc;
     color: #fff;
     cursor: pointer;
 }
 
-
 .nextButton {
-    margin: auto;
+    margin-top: 50px;
     display: block;
     border-radius: 5px;
     border: none;
@@ -39,6 +52,11 @@ header {
 
 .startButton:hover, .nextButton:hover {
     background-color: #1e0afc;
+}
+
+.description {
+    text-align: center;
+    margin: 140px;
 }
 
 .quizContainer {
@@ -55,13 +73,29 @@ header {
 }
 
 .answers {
-    text-align: center;
+    width: 640px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: left;
 }
 
 input {
-    display:block;
-    margin: 20px;
-    
+    display: inline;
+    margin: 10px;
+}
+
+input.radio {
+    width: auto;
+}
+
+input > span {
+    position: absolute;
+}
+
+label {
+    white-space: nowrap;
 }
 
 .score, .progress {
@@ -82,6 +116,7 @@ footer {
     padding-bottom: 20px;
     margin: 0 auto;
     height: 60px;
+    width: 100%;
     color: #fff;
-    background-color: #5849fc
+    background-color: #5849fc;
 }

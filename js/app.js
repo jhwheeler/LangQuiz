@@ -91,6 +91,7 @@ var eventActions = {
     startButtonHandler: function() {
         event.preventDefault();
         $('.startButton').addClass('hidden');
+        $('.description').addClass('hidden');
         $('.quizContainer').removeClass('hidden');
         renderActions.renderQuestion(state, $('.quizContainer'));
         renderActions.renderChoices(state, $('.js-answers'));
@@ -99,7 +100,7 @@ var eventActions = {
 
 $(function() {
     $('.startButton').on('click', eventActions.startButtonHandler); 
-    $('.nextButton').on('click', eventActions.nextButtonHandler);
+    $('.js-answers').on('submit', eventActions.nextButtonHandler);
 });
 
 
