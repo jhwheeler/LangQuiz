@@ -68,7 +68,7 @@ var renderActions = {
             return .5 - Math.random(); 
         });
         for (var i = 0; i < c.length; i++) {
-            element.find('.js-answer-' + i).text(c[i]);
+            element.find('#js-answer-' + i).text(c[i]);
         }
     },
     renderCorrectAnswer(state, questions) {
@@ -79,14 +79,13 @@ var renderActions = {
 
 var eventActions = {
     nextButtonHandler: function() {
-        if (state.currentQuestionNumber < state.questions.length - 1) {
-            state.currentQuestionNumber++;
-            return true;
-        } else {
-            return false;
-        }
+        event.preventDefault();
+        state.currentQuestionNumber++;
         renderActions.renderQuestion(state, $('.quizContainer'));
         renderActions.renderChoices(state, $('.js-answers'));
+        $('.startButton').addClass('hidden');
+        $('.description').addClass('hidden');
+        $('.quizContainer').removeClass('hidden');
     },
     startButtonHandler: function() {
         event.preventDefault();
