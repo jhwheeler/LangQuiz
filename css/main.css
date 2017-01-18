@@ -84,18 +84,20 @@ h1 {
 input {
     display: inline;
     margin: 10px;
+    visibility: hidden;
+    width: 100%;
 }
 
-input.radio {
-    width: auto;
-}
-
-input > span {
-    position: absolute;
+input:checked + label {
+    padding: 5px;
+    color: #fff;
+    background-color: #5849fc;
+    border-radius: 5px;
 }
 
 label {
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .score, .progress {
