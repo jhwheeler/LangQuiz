@@ -15,7 +15,7 @@ var state = {
                 "The smallest meaning-bearing unit in a given language."
             ],
             questionNumber: 0,
-            correctAnswer: 0,
+            correctAnswerNumber: 0,
             chosenAnswer: null
         },
         {
@@ -27,7 +27,7 @@ var state = {
                 "A prefix or suffix that can be added to the beginning or ending of a word to make a new word."
             ],
             questionNumber: 1,
-            correctAnswer: 0,
+            correctAnswerNumber: 0,
             chosenAnswer: null
         },
         {
@@ -39,7 +39,7 @@ var state = {
                 "With this ring, I thee wed."
             ],
             questionNumber: 2,
-            correctAnswer: 0,
+            correctAnswerNumber: 0,
             chosenAnswer: null
         },
         {
@@ -51,7 +51,7 @@ var state = {
                 "Dictates how language should be spoken by the general public."
             ],
             questionNumber: 3,
-            correctAnswer: 0,
+            correctAnswerNumber: 0,
             chosenAnswer: null
         },
         {
@@ -63,7 +63,7 @@ var state = {
                 "10,000"
             ],
             questionNumber: 4,
-            correctAnswer: 2,
+            correctAnswerNumber: 2,
             chosenAnswer: null
         }
     ]
@@ -84,9 +84,17 @@ var renderActions = {
             element.find('#js-answer-' + i).text(c[i]);
         }
     },
-    renderCorrectAnswer: function(state, questions) {
-        var currentCorrectAnswer = state.questions[state.currentQuestionNumber].correctAnswer;
-        return state.questions[state.currentQuestionNumber].choices[currentCorrectAnswer];
+    renderCorrectAnswer: function(state, element) {
+        var currentCorrectAnswerNumber = state.questions[state.currentQuestionNumber].correctAnswerNumber;
+        var currentCorrectAnswer = state.questions[state.currentQuestionNumber].choices[currentCorrectAnswerNumber];
+        element.removeClass('hidden');
+        if (currentCorrectAnswer == state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswerNumber]) {
+            element.find('.js-correctFeedback').removeClass('hidden');
+        } else {
+            element.find('js-incorrectFeedback').removeClass('hidden');
+            element.find('js-correctedAnswer').text(currentCorrectAnswer);
+            element.find('js-correctedAnswer').removeClass('hidden');
+        }
     },
     renderProgress: function(state, element) {
         element.find('.js-progress-number').text((state.currentQuestionNumber) + 1);
@@ -99,7 +107,7 @@ var renderActions = {
             currentChosenAnswer = state.questions[state.currentQuestionNumber].chosenAnswer;
             return currentChosenAnswer;
         });
-        if (currentChosenAnswer == state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswer]) {
+        if (currentChosenAnswer == state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswerNumber]) {
             state.score++;
         } else {
             state.incorrect++; 
@@ -124,13 +132,8 @@ var eventActions = {
             renderActions.renderQuestion(state, $('.quizContainer'));
             renderActions.renderChoices(state, $('.js-answers'));
             renderActions.renderProgress(state, $('.js-progress'));
-            $('.startButton').addClass('hidden');
-            $('.description').addClass('hidden');
-            $('.quizContainer').removeClass('hidden');
         } else {
             renderActions.renderResults(state, $('.js-results'));
-            //$('.startButton').addClass('hidden');
-            //$('.description').addClass('hidden');
             $('.quizContainer').addClass('hidden');
             $('.results').removeClass('hidden');
             $('.js-resetButton').removeClass('hidden');
