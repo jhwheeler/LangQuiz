@@ -81,14 +81,20 @@ var renderActions = {
     },
     renderScore: function(state, element) {
         //log chosenAnswer
-        var currentChosenAnswer = state.questions[state.currentQuestionNumber].chosenAnswer;
+        var currentChosenAnswer;
         $('input[type="radio"]:checked').each(function() {
-            currentChosenAnswer = $('label[for=' + $(this).attr("id") + ']').text();
+            state.questions[state.currentQuestionNumber].chosenAnswer = $('label[for=' + $(this).attr("id") + ']').text();
+            currentChosenAnswer = state.questions[state.currentQuestionNumber].chosenAnswer;
+            return currentChosenAnswer;
         });
         //compare chosenAnswer to correctAnswer
+        console.log("correct answer is " + state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswer]);
+        console.log("currentChosenAnswer = " + currentChosenAnswer);
         if (currentChosenAnswer == state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswer]) {
             state.score++;
+            console.log("correct answer, score is " + state.score);
         } else {
+               console.log("wrong answer, score is " + state.score);
                return state.score; 
         }
         //change text of .js-correct-score and .js-incorrect-score
