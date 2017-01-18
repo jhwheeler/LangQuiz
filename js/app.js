@@ -133,6 +133,7 @@ var eventActions = {
             //$('.description').addClass('hidden');
             $('.quizContainer').addClass('hidden');
             $('.results').removeClass('hidden');
+            $('.js-resetButton').removeClass('hidden');
         }
     },
     startButtonHandler: function() {
@@ -149,6 +150,9 @@ var eventActions = {
 $(function() {
     $('.startButton').on('click', eventActions.startButtonHandler); 
     $('.js-answers').on('submit', eventActions.nextButtonHandler);
+    $('.js-resetButton').on('click', function() {
+        location.reload();
+    });
 });
 
 
