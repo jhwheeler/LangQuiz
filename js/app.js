@@ -63,10 +63,12 @@ var renderActions = {
         element.find('.js-question-text').text(state.questions[state.currentQuestionNumber].question);
     },
     renderChoices: function(state, element) {
-        var c = state.questions[state.currentQuestionNumber].choices;
+        var c = (state.questions[state.currentQuestionNumber].choices).slice(0);
         c.sort(function() { 
             return .5 - Math.random(); 
         });
+        console.log("c is " + c);
+        console.log(state.questions[state.currentQuestionNumber].choices);
         for (var i = 0; i < c.length; i++) {
             element.find('#js-answer-' + i).text(c[i]);
         }
