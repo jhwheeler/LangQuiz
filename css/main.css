@@ -24,7 +24,7 @@ h1 {
     margin-bottom: 0px;
 }
 
-.startButton {
+.startButton, .resetButton {
     margin: 0 auto;
     display: block;
     border-radius: 5px;
@@ -51,7 +51,7 @@ h1 {
     cursor: pointer;
 }
 
-.startButton:hover, .nextButton:hover {
+.startButton:hover, .nextButton:hover, .resetButton:hover {
     background-color: #1e0afc;
 }
 
@@ -105,6 +105,20 @@ label {
     margin: 10px;
 }
 
+.results {
+    margin: auto;
+    padding: 20px;
+    width: 1000px;
+    height: 500px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.message {
+    margin: 15px;
+    font-size: 30px;
+    font-weight: 500;
+}
 .hidden {
     display: none;
 }

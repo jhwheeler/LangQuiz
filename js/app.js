@@ -2,7 +2,9 @@
 
 var state = {
     score: 0,
-    message: ["Congratulations!", "Well done!", "Not bad", "Could be better", "You've got some work to do..."],
+    incorrect: 0,
+    message: ["Did you even try?", "You've got some work to do...", "Could be better...", "Not bad!", "Well done!", "Wow - congratulations!"],
+    currentQuestionNumber: 0,
     questions: [
         {
             question: "1. What is a phoneme?",
@@ -51,12 +53,23 @@ var state = {
             questionNumber: 3,
             correctAnswer: 0,
             chosenAnswer: null
+        },
+        {
+            question: "5. Roughly how many languages are there in the world today?",
+            choices: [
+                "2,000",
+                "4,000",
+                "6,000",
+                "10,000"
+            ],
+            questionNumber: 4,
+            correctAnswer: 2,
+            chosenAnswer: null
         }
-    ],
-    currentQuestionNumber: 0
+    ]
 };
 
-    state.currentQuestion = state.questions[state.currentQuestionNumber].question
+state.currentQuestion = state.questions[state.currentQuestionNumber].question
 
 var renderActions = {
     renderQuestion: function(state, element) {
@@ -67,8 +80,6 @@ var renderActions = {
         c.sort(function() { 
             return .5 - Math.random(); 
         });
-        console.log("c is " + c);
-        console.log(state.questions[state.currentQuestionNumber].choices);
         for (var i = 0; i < c.length; i++) {
             element.find('#js-answer-' + i).text(c[i]);
         }
@@ -82,25 +93,25 @@ var renderActions = {
 
     },
     renderScore: function(state, element) {
-        //log chosenAnswer
         var currentChosenAnswer;
         $('input[type="radio"]:checked').each(function() {
             state.questions[state.currentQuestionNumber].chosenAnswer = $('label[for=' + $(this).attr("id") + ']').text();
             currentChosenAnswer = state.questions[state.currentQuestionNumber].chosenAnswer;
             return currentChosenAnswer;
         });
-        //compare chosenAnswer to correctAnswer
-        console.log("correct answer is " + state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswer]);
-        console.log("currentChosenAnswer = " + currentChosenAnswer);
         if (currentChosenAnswer == state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswer]) {
             state.score++;
-            console.log("correct answer, score is " + state.score);
         } else {
-               console.log("wrong answer, score is " + state.score);
-               return state.score; 
+            state.incorrect++; 
         }
-        //change text of .js-correct-score and .js-incorrect-score
         element.find('.js-correct-score').text(state.score);
+        element.find('.js-incorrect-score').text(state.incorrect);
+    },
+    renderResults: function(state, element) {
+        var scoreMessage = state.message[state.score];
+        element.find('.js-message').text(scoreMessage);
+        element.find('.js-final-score').text(state.score);
+        element.removeClass('hidden');
     }
 }
 
@@ -108,13 +119,21 @@ var eventActions = {
     nextButtonHandler: function() {
         event.preventDefault();
         renderActions.renderScore(state, $('.js-score'));
-        state.currentQuestionNumber++;
-        renderActions.renderQuestion(state, $('.quizContainer'));
-        renderActions.renderChoices(state, $('.js-answers'));
-        renderActions.renderProgress(state, $('.js-progress'));
-        $('.startButton').addClass('hidden');
-        $('.description').addClass('hidden');
-        $('.quizContainer').removeClass('hidden');
+        if (state.currentQuestionNumber < 4) {
+            state.currentQuestionNumber++;
+            renderActions.renderQuestion(state, $('.quizContainer'));
+            renderActions.renderChoices(state, $('.js-answers'));
+            renderActions.renderProgress(state, $('.js-progress'));
+            $('.startButton').addClass('hidden');
+            $('.description').addClass('hidden');
+            $('.quizContainer').removeClass('hidden');
+        } else {
+            renderActions.renderResults(state, $('.js-results'));
+            //$('.startButton').addClass('hidden');
+            //$('.description').addClass('hidden');
+            $('.quizContainer').addClass('hidden');
+            $('.results').removeClass('hidden');
+        }
     },
     startButtonHandler: function() {
         event.preventDefault();
