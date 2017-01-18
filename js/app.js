@@ -78,12 +78,28 @@ var renderActions = {
     renderProgress: function(state, element) {
         element.find('.js-progress-number').text((state.currentQuestionNumber) + 1);
 
+    },
+    renderScore: function(state, element) {
+        //log chosenAnswer
+        var currentChosenAnswer = state.questions[state.currentQuestionNumber].chosenAnswer;
+        $('input[type="radio"]:checked').each(function() {
+            currentChosenAnswer = $('label[for=' + $(this).attr("id") + ']').text();
+        });
+        //compare chosenAnswer to correctAnswer
+        if (currentChosenAnswer == state.questions[state.currentQuestionNumber].choices[state.questions[state.currentQuestionNumber].correctAnswer]) {
+            state.score++;
+        } else {
+               return state.score; 
+        }
+        //change text of .js-correct-score and .js-incorrect-score
+        element.find('.js-correct-score').text(state.score);
     }
 }
 
 var eventActions = {
     nextButtonHandler: function() {
         event.preventDefault();
+        renderActions.renderScore(state, $('.js-score'));
         state.currentQuestionNumber++;
         renderActions.renderQuestion(state, $('.quizContainer'));
         renderActions.renderChoices(state, $('.js-answers'));
