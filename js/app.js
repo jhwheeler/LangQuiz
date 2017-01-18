@@ -71,9 +71,13 @@ var renderActions = {
             element.find('#js-answer-' + i).text(c[i]);
         }
     },
-    renderCorrectAnswer(state, questions) {
+    renderCorrectAnswer: function(state, questions) {
         var currentCorrectAnswer = state.questions[state.currentQuestionNumber].correctAnswer;
         return state.questions[state.currentQuestionNumber].choices[currentCorrectAnswer];
+    },
+    renderProgress: function(state, element) {
+        element.find('.js-progress-number').text((state.currentQuestionNumber) + 1);
+
     }
 }
 
@@ -83,6 +87,7 @@ var eventActions = {
         state.currentQuestionNumber++;
         renderActions.renderQuestion(state, $('.quizContainer'));
         renderActions.renderChoices(state, $('.js-answers'));
+        renderActions.renderProgress(state, $('.js-progress'));
         $('.startButton').addClass('hidden');
         $('.description').addClass('hidden');
         $('.quizContainer').removeClass('hidden');
@@ -94,6 +99,7 @@ var eventActions = {
         $('.quizContainer').removeClass('hidden');
         renderActions.renderQuestion(state, $('.quizContainer'));
         renderActions.renderChoices(state, $('.js-answers'));
+        renderActions.renderProgress(state, $('.js-progress'));
     }
 }
 
