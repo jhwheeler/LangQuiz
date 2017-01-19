@@ -127,7 +127,7 @@ var eventActions = {
     nextButtonHandler: function() {
         event.preventDefault();
         renderActions.renderScore(state, $('.js-score'));
-        if (state.currentQuestionNumber < 4) {
+        if (state.currentQuestionNumber < state.questions.length) {
             state.currentQuestionNumber++;
             renderActions.renderQuestion(state, $('.quizContainer'));
             renderActions.renderChoices(state, $('.js-answers'));
